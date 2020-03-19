@@ -5,7 +5,7 @@ An Azure DevOps Pipeline Workshop to showcase scanning of container images durin
 _**THIS SCRIPT IS PROVIDED TO YOU "AS IS."  TO THE EXTENT PERMITTED BY LAW, QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR USE OF THIS SCRIPT.  IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE CLOUD SERVICES AS PROVIDED BY QUALYS**_
 
 ## Description
-The aim of this repository is to build a solution which will help you understand how Qualys CS can be used to detect vulnerabilities in the Container Image and pass/fail builds based on conditions listed below:
+In this workshop, you build a solution where Qualys CS can be used to detect vulnerabilities in the Container Image and pass/fail builds based on conditions listed below:
   1. Vulnerability Severity
   2. Qualys Vulnerability Identifiers (QIDs)
   3. CVEs
@@ -13,7 +13,8 @@ The aim of this repository is to build a solution which will help you understand
   5. CVSS Score
 The condition is specified in the [file](/jq_filter.txt) using [Jq syntax](https://stedolan.github.io/jq/manual/).
 
-*An example*
+**_An example_**
+
 [.vulnerabilities[] | select(.severity>=3) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity >= 3 found!") else "No vulnerabilities found with severity >=3" end
 
 We will run Qualys sensor in CICD mode because the script in this workshop will tag the image(s) specified as "qualys_scan_target:<image-id>" since the sensor is built to only scan those images, hence it has some efficiencies to better support CI pipelines.
