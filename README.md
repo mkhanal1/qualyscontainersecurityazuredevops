@@ -8,18 +8,24 @@ _**THIS SCRIPT IS PROVIDED TO YOU "AS IS."  TO THE EXTENT PERMITTED BY LAW, QUAL
 The aim of this repository is to build a solution which will help you understand how Qualys CS can be used to detect vulnerabilities in the Container Image and pass/fail builds based on conditions listed below:
   1. Vulnerability Severity
   2. Qualys Vulnerability Identifiers (QIDs)
-  3. 
+  3. CVEs
+  4. Software Names
+  5. CVSS Score
+The condition is specified in the [file](/jq_filter.txt) using [Jq syntax](https://stedolan.github.io/jq/manual/).
 
-Qualys Sensor works in three modes. We will run Qualys sensor in CICD mode because the sensor will only scan images with the name:tag of "qualys_scan_target:<image-id>", and has some efficiencies to better support CI pipelines.
+*An example*
+[.vulnerabilities[] | select(.severity>=3) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity >= 3 found!") else "No vulnerabilities found with severity >=3" end
+
+We will run Qualys sensor in CICD mode because the script in this workshop will tag the image(s) specified as "qualys_scan_target:<image-id>" since the sensor is built to only scan those images, hence it has some efficiencies to better support CI pipelines.
   1. General (Host)
   2. Registry
   3. Build (CI/CD)
 
-The workshop adapts the CI scripts available in repo which showcases  in any pipeline.
+The workshop adapts the CI scripts available in [repo](https://github.com/Qualys/community/tree/master/containerSecurity#validate-docker-image-without-plugin).
 
 ## **Prerequisites:**
   1. [**An Azure Container Registry**](/prerequisite/azurecontainerregistry.md)
-  3. [**A Qualys Subscription**](https://www.qualys.com/free-trial/)
+  2. [**A Qualys Subscription**](https://www.qualys.com/free-trial/)
  
 ## Usage
 **Task 1:** Use the [Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net/) to provision the project to your Azure DevOps Org. Use the below GitHub link as source template
