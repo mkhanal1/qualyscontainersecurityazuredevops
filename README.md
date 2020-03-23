@@ -14,9 +14,9 @@ In this workshop, you build a solution where Qualys CS can be used to detect vul
 
 The condition is specified in the [file](/jq_filter.txt) using [Jq syntax](https://stedolan.github.io/jq/manual/).
 
-**_An example_**
+```**_An example_**
 
-[.vulnerabilities[] | select(.severity>=3) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity >= 3 found!") else "No vulnerabilities found with severity >=3" end
+[.vulnerabilities[] | select(.severity>=3) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity >= 3 found!") else "No vulnerabilities found with severity >=3" end```
 
 **CS Sensor Mode**
 
