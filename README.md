@@ -18,6 +18,8 @@ The condition is specified in the [file](/jq_filter.txt) using [Jq syntax](https
 
 [.vulnerabilities[] | select(.severity>=3) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity >= 3 found!") else "No vulnerabilities found with severity >=3" end
 
+**CS Sensor Mode**
+
 We will run Qualys sensor in CICD mode because the script in this workshop will tag the image(s) specified as "qualys_scan_target:<image-id>" since the sensor is built to only scan those images, hence it has some efficiencies to better support CI pipelines. The CS sensor is hosted in public repository (qualys/qcs-sensor) in DockerHub.
   1. General (Host)
   2. Registry
