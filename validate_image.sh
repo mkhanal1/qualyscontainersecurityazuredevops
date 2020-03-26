@@ -43,6 +43,15 @@ check_command_exists () {
 	hash $1 2>/dev/null || { echo >&2 "This script requires $1 but it's not installed. Aborting."; exit 1; }
 }
 
+authentication_qualys () {
+	QUALYS_AUTH_URL="${QUALYS_API_SERVER}/auth"
+	body="username=${USERNAME}&password=${PASSWORD}&token=true"
+	headers="ContentType:application/x-www-form-urlencoded"
+	jwttoken="${CURL} -v -X POST ${QUALYS_AUTH_URL} -d $body -H $headers"
+	token=$($jwttoken)
+	echo ${token}
+}
+
 get_result () {
 	echo "Getting result for ${IMAGE_ID}"
 	CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
@@ -99,7 +108,7 @@ check_command_exists docker
 CURL=$(which curl)
 JQ=$(which jq)
 DOCKER=$(which docker)
-
+token=$(authentication_qualys)
 check_image_input_type ${IMAGE}
 
 if [ "${IMAGE_INPUT_TYPE}" == "NAME" ]; then
@@ -111,20 +120,20 @@ else
 fi
 
 echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
-GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
+GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.2/images/${IMAGE_ID}"
 echo ${GET_IMAGE_VULNS_URL}
 
 echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
 echo "Qualys Sensor will untag it after scanning. In case this is the only tag present, Sensor will not remove it."
 `docker tag ${IMAGE_ID} qualys_scan_target:${IMAGE_ID}`
 
-get_result
+get_result ${token}
 
 while [ "${HTTP_CODE}" -ne "200" -o "${VULNS_AVAILABLE}" != true ]
 do
 	echo "Retrying after 10 seconds..."
 	sleep 20
-	get_result
+	get_result ${token}
 done
 
 EVAL_RESULT=$(jq -f jq_filter.txt ${IMAGE_ID}.json)
