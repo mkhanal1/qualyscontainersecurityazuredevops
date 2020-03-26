@@ -54,9 +54,12 @@ authentication_qualys () {
 
 get_result () {
 	echo "Getting result for ${IMAGE_ID}"
-	CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
-	echo $(CURL_COMMAND)
-	HTTP_CODE=$($CURL_COMMAND | tail -n 1)
+	token=$1
+	headers="Authorization:Bearer ${token}"
+	#CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
+	CURL_COMMAND=$(curl -v $GET_IMAGE_VULNS_URL -H "$headers" -L -w "/n%{http_code}" -o ${IMAGE_ID}.json)
+	#echo $(CURL_COMMAND)
+	HTTP_CODE=$CURL_COMMAND
 	echo "HTTP Code: ${HTTP_CODE}"
 	if [ "$HTTP_CODE" == "200" ]; then
 		check_vulns
