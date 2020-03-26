@@ -57,7 +57,7 @@ get_result () {
 	token=$1
 	headers="Authorization:Bearer ${token}"
 	#CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
-	CURL_COMMAND=$(curl -v $GET_IMAGE_VULNS_URL -H "$headers" -L -w "/n%{http_code}" -o ${IMAGE_ID}.json)
+	CURL_COMMAND=$(curl -v $GET_IMAGE_VULNS_URL -H "$headers" -L -w "%{http_code}" -o ${IMAGE_ID}.json)
 	#echo $(CURL_COMMAND)
 	HTTP_CODE=$CURL_COMMAND
 	echo "HTTP Code: ${HTTP_CODE}"
