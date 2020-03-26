@@ -37,8 +37,8 @@ The workshop adapts the CI scripts available in [repo](https://github.com/Qualys
 **Task 1:** Use the [Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net/) to provision the project to your Azure DevOps Org. Use the below GitHub link as source template
 _https://raw.githubusercontent.com/mkhanal1/qualyscontainersecurityazuredevops/master/containersecurityproject.zip
 
-  ![Image1](/images/1.png?raw=true)
-  ![Image2](/images/2.png?raw=true)
+  ![Image1](/images/2.png?raw=true)
+  ![Image2](/images/1.png?raw=true)
 
 **Task 2:** Import this repository to Azure GIT
 
