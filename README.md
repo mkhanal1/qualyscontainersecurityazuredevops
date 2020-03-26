@@ -35,7 +35,7 @@ The workshop adapts the CI scripts available in [repo](https://github.com/Qualys
  
 ## Usage
 **Task 1:** Use the [Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net/) to provision the project to your Azure DevOps Org. Use the below GitHub link as source template
-_https://raw.githubusercontent.com/mkhanal1/qualyscontainersecurityazuredevopsdemo/master/containersecuritydemo.zip_
+_https://raw.githubusercontent.com/mkhanal1/qualyscontainersecurityazuredevops/master/containersecurityproject.zip
 
   ![Image1](/images/1.png?raw=true)
   ![Image2](/images/2.png?raw=true)
@@ -48,13 +48,12 @@ _https://raw.githubusercontent.com/mkhanal1/qualyscontainersecurityazuredevopsde
 **Task 3:** Edit your pipeline variables in Variable Groups
 The template file has these 9 variables.
 
-  * **QUALYS_API_SERVER:** "Qualys baseurl for CS API"
+  * **QUALYS_API_SERVER:** "Qualys baseurl for CS gateway API"
+  * **QUALYS_CMS_SERVER:** "Qualys CMS URL for CS Sensor"
   * **QUALYS_PASSWORD:** "Qualys password to call CS API"
   * **QUALYS_USERNAME:** "Qualys username to call CS API"
   * **SENSOR_ACTIVATION_ID:** " Activation Id for the container sensor"
   * **SENSOR_CUSTOMER_ID:** "Qualys subscription’s customerId"
-  
-  Eg: _https://{storage-account}.blob.core.windows.net/{container-name}/QualysContainerSensor.tar_
   
   
 **Task 4:** Edit the Build Pipeline
