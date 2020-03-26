@@ -54,7 +54,7 @@ The template file has these 9 variables.
   * **QUALYS_USERNAME:** "Qualys username to call CS API"
   * **SENSOR_ACTIVATION_ID:** " Activation Id for the container sensor"
   * **SENSOR_CUSTOMER_ID:** "Qualys subscription’s customerId"
-  
+    ![Image8](/images/8.png?raw=true)
   
 **Task 4:** Edit the Build Pipeline
 
